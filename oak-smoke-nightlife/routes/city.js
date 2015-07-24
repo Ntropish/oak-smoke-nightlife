@@ -34,15 +34,14 @@ router.get(
                 function checkBar(googlesBar, index) {
                     Bar.findOne({googleId: googlesBar.id}, function(err, bar){
                         if (err) {
-                            console.err(err);
+                            console.error(err);
                         }
                         if (bar) {
-                            console.log('bar found, loading', bar.numberVisiting);
                             outputBars.push({name: bar.name, attending: bar.numberVisiting, id: bar.googleId});
                         } else {
                             var newBar = new Bar({name: googlesBar.name, numberVisiting: 0, googleId: googlesBar.id});
                             newBar.save(function(err){
-                                console.err('error saving bar:', err);
+                                console.error('error saving bar:', err);
                             });
                             outputBars.push({name: googlesBar.name, attending: 0, id: googlesBar.id});
                         }
@@ -110,7 +109,6 @@ router.post(
         }
 
         if (req.isAuthenticated() && newPlaceId) {
-            console.log('Finding user');
             User.findOne({username: req.session.passport.user}, function(err, user) {
 
                 if (err) {
@@ -122,7 +120,6 @@ router.post(
                         res.send(report);
                     } else {
                         Bar.findOne({googleId: user.visiting}, function (err, bar) {
-                            console.log('Finding old bar');
                             if (err) {
                                 console.error('database error(city, POST, bar, findOne, user.visiting):', err);
                             }

@@ -3,4 +3,8 @@ block scripts
    script(src="javascripts/index.js")
 
 block content
-    h4 Hello!
+    div(ng-app="nightlife" ng-controller="nightlifeCtrl as nl")
+        button(class="btn" ng-click="nl.findBars")
+            | Find local bars
+        div(ng-repeat="bar in nl.bars")
+            h4 {{ bar.name }}
