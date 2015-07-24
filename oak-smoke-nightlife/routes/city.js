@@ -60,23 +60,33 @@ router.get(
         }
         var url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
         var report = {success: false};
-        var username = '';
+        var username = req.isAuthenticated() ? req.session.passport.user : '';
         var location = '';
         var sentLocation = req.query.location;
 
+        if (req.isAuthenticated() && sentLocation) {
+            // If program gets here then user is authenticated and sent a location so save that location
+            User.findOne({username: username}, function(err, user){
+
+                if (err) {
+                    console.error('database error(city, GET, findOne, username, save location):',err);
+                }
+                // If a user was found use their location when finding bars
+                if (user) {
+                    user.location = sentLocation;
+                    user.save();
+                }
+            });
+        }
+
         // If no location was given and user is authenticated, check for saved location
         if (req.isAuthenticated() && !sentLocation) {
-            username = req.passport.session.user;
             User.findOne({username: username}, function(err, user){
                 if (err) {
-                    console.error('database error(city, GET, findOne, username):',err);
+                    console.error('database error(city, GET, findOne, username, load location):',err);
                 }
-                // If a user was found set usersLocation to the found user's location
+                // If a user was found use their location when finding bars
                 var usersLocation = user && user.location;
-
-                // If usersLocation is truthy, set location to that value
-                // Not setting location directly to usersLocation because it might
-                // be useful to keep location as an empty string
                 if (usersLocation) {
                     location = usersLocation;
                     makeRequest();
