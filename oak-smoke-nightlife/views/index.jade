@@ -5,15 +5,21 @@ block scripts
 
 block content
     div(ng-app="nightlife" ng-controller="NightlifeCtrl as nl")
-        div#authenticator
-            button(class="btn" ng-click="switchTab(0)")
+        div#authenticator(class="ng-cloak" ng-show="!user || initialHide")
+            button#login-tab-button(class="btn" ng-click="switchTab(0)")
                 | Login
-            button(class="btn" ng-click="switchTab(1)")
+            button#register-tab-button(class="btn" ng-click="switchTab(1)")
                 | Register
-            form(novalidate)
-                input(type="text" class="authenticator-input" ng-model="username" placeholder="Username")
-                input(type="password" class="authenticator-input" ng-model="password" placeholder="Password")
-                input(type="password" ng-show="tab === 1" class="authenticator-input" ng-model="confirm" placeholder="Confirm")
+            form#authentication-form(novalidate)
+                input#username-input(type="text" class="authenticator-input" ng-model="username" placeholder="Username")
+                input#password-input(type="password" class="authenticator-input" ng-model="password" placeholder="Password")
+                input#confirm-input(type="password" ng-show="tab === 1" class="authenticator-input" ng-model="confirm" placeholder="Confirm")
+                button#submit-authentication-form-button(class="btn" ng-click="submitAuthenticationForm()")
+                    | Submit
+        div#user-tools(class="ng-cloak" ng-show="user || initialHide")
+            h3 Hello, {{user.username}}!
+            button(class="btn" ng-click="logout()")
+                | Logout
         div#display
             button(class="btn" ng-click="findBars()")
                 | Find local bars

@@ -1,11 +1,33 @@
 angular.module('nightlife', [])
     .controller('NightlifeCtrl', ['$scope', function ($scope) {
-        $scope.bars = [{name: 'ayo'}];
-        $scope.user = {};
+        $scope.bars = [];
         $scope.latLong = '';
         $scope.tab = 0;
         $scope.user = null;
+        $scope.initialHide = true;
 
+        function getUser() {
+            $.ajax('/login',
+                {
+                    type: 'GET',
+                    success: function(res) {
+                        $scope.$apply( function() {
+                            if (res.success) {
+                                $scope.user = {
+                                    username: res.username,
+                                    location: res.location,
+                                    visiting: res.visiting
+                                };
+                            } else {
+                                user = null;
+                            }
+                            if ($scope.initialHide) {
+                                $scope.initialHide = false;
+                            }
+                        });
+                    }
+                })
+        }
         function login() {
             $.ajax('/login',
                 {
@@ -15,11 +37,27 @@ angular.module('nightlife', [])
                     password: $scope.password
                 },
                 success: function(res) {
-                    console.log(res);
+                    if (res.success) {
+                        $scope.username = '';
+                        $scope.password = '';
+                        getUser();
+                    }
                 }
             })
         }
-
+        function logout() {
+            $.ajax('/logout',
+                {
+                    type: 'POST',
+                    success: function(res) {
+                        $scope.$apply( function() {
+                            if (res.success) {
+                                $scope.user = null;
+                            }
+                        });
+                    }
+                })
+        }
         function getLocation() {
             navigator.geolocation.getCurrentPosition(function (position) {
                 var latitude  = position.coords.latitude;
@@ -44,7 +82,9 @@ angular.module('nightlife', [])
             );
         }
 
+
         getLocation();
+        getUser();
 
         $scope.switchTab = function switchTabToLogin(tabCode) {
             $scope.tab = tabCode;
@@ -54,6 +94,13 @@ angular.module('nightlife', [])
             if ($scope.latLong) {
                 updateBars();
             }
-        }
+        };
+
+        $scope.submitAuthenticationForm = function submitAuthenticationForm() {
+            if ($scope.tab === 0) {
+                login();
+            }
+        };
+        $scope.logout = logout;
 
     }]);
