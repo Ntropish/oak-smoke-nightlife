@@ -14,3 +14,12 @@ a {
 .authenticator-input{
     display: block;
 }
+
+.fade-in {
+    opacity: 1;
+    transition: 0.2s;
+}
+.fade-out {
+    opacity: 0;
+    transition: 0.2s;
+}

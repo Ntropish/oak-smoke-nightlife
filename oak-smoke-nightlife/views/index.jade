@@ -23,5 +23,13 @@ block content
         div#display
             button(class="btn" ng-click="findBars()")
                 | Find local bars
-            div(ng-repeat="bar in bars")
-                h4.ng-cloak {{ bar.name }}
+            div(ng-repeat="bar in bars" ng-cloak)
+                h4.bar-name
+                    | {{ bar.name }}
+                h4.bar-visitors
+                    | {{ bar.attending }}
+                button(class="btn" ng-click="attend($index)" ng-show="user")
+                    | Attend
+        div#viewMessage(ng-class="messageFade" ng-show="viewMessageVisible" ng-cloak)
+            h2 {{ message.title }}
+            p {{ message.text }}
