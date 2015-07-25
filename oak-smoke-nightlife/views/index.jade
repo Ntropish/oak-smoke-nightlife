@@ -5,29 +5,31 @@ block scripts
 
 block content
     div#nightlife-application(ng-app="nightlife" ng-controller="NightlifeCtrl as nl")
-        div#authenticator(class="ng-cloak" ng-show="!user || initialHide")
-            button#login-tab-button(ng-class="{'active-tab': tab === 0}" class="btn tab-btn" ng-click="switchTab(0)")
-                | Login
-            button#register-tab-button(ng-class="{'active-tab': tab === 1}" class="btn tab-btn" ng-click="switchTab(1)")
-                | Register
-            form#authenticator-form(novalidate)
-                input#username-input(type="text" class="authenticator-input" ng-model="username" placeholder="Username")
-                input#password-input(type="password" class="authenticator-input" ng-model="password" placeholder="Password")
-                input#confirm-input(type="password" ng-show="tab === 1" class="authenticator-input" ng-model="confirm" placeholder="Confirm")
-                button#submit-authentication-form-button(class="btn authenticator-input" ng-click="submitAuthenticationForm()")
-                    | Submit
-        div#user-tools(class="ng-cloak" ng-show="user && !initialHide")
-            h3 Hello, {{user.username}}!
-            button(class="btn" ng-click="logout()")
-                | Logout
-        div#bar-display
-            div(ng-repeat="bar in bars" ng-cloak)
-                h4.bar-name
-                    | {{ bar.name }}
-                h4.bar-visitors
-                    | {{ bar.attending }}
-                button(class="btn" ng-click="attend($index)" ng-show="user")
-                    | Attend
+        div#user-handling
+            div#authenticator(class="ng-cloak" ng-show="!user || initialHide")
+                button#login-tab-button(ng-class="{'active-tab': tab === 0}" class="btn tab-btn" ng-click="switchTab(0)")
+                    | Login
+                button#register-tab-button(ng-class="{'active-tab': tab === 1}" class="btn tab-btn" ng-click="switchTab(1)")
+                    | Register
+                form#authenticator-form(novalidate)
+                    input#username-input(type="text" class="authenticator-input" ng-model="username" placeholder="Username")
+                    input#password-input(type="password" class="authenticator-input" ng-model="password" placeholder="Password")
+                    input#confirm-input(type="password" ng-show="tab === 1" class="authenticator-input" ng-model="confirm" placeholder="Confirm")
+                    button#submit-authentication-form-button(class="btn authenticator-input" ng-click="submitAuthenticationForm()")
+                        | Submit
+            div#user-tools(class="ng-cloak" ng-show="user && !initialHide")
+                h3#greeting Hello, {{user.username}}!
+                button#logout-button(class="btn" ng-click="logout()")
+                    | Logout
         div#view-message(ng-class="messageFade" ng-show="viewMessageVisible" ng-cloak)
-            h2 {{ message.title }}
+            h1 {{ message.title }}
             p {{ message.text }}
+        div#bar-display
+            div(class="bar" ng-repeat="bar in bars" ng-cloak)
+                p.bar-name(ng-class="{'logged-in': user !== null}")
+                    | {{ bar.name }}
+                p.bar-visitors
+                    | {{ bar.attending }}
+                button(class="btn" ng-click="attend($index)" ng-show="user" ng-class="{'bar-user-is-attending-button': getBarIndexById(user.visiting) === $index}")
+                    | {{ getBarIndexById(user.visiting) === $index ? 'Going' : 'Go' }}
+                span

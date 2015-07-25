@@ -1,4 +1,6 @@
+@import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
 body {
+  background-color: #fffbfd;
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
 
@@ -21,6 +23,10 @@ input.authenticator-input {
   opacity: 1;
   transition: 0.2s; }
 
+.fade-out {
+  opacity: 0;
+  transition: 0.2s; }
+
 .authenticator-input {
   width: 100%; }
 
@@ -28,22 +34,22 @@ input.authenticator-input {
   cursor: pointer;
   height: 3em;
   border: 0;
-  background-color: #e99327;
+  background-color: #e44010;
   z-index: 1;
   box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.2); }
   .tab-btn:focus {
     outline: 0; }
   .tab-btn:hover {
-    background-color: #ec9e3e; }
+    background-color: #ef4d1e; }
   .tab-btn.active-tab {
-    border-top: 1px solid #f3c183;
+    border-top: 1px solid #f48666;
     position: relative;
-    background-color: #eeaa55;
+    background-color: #f16036;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     z-index: 2; }
 
 @media screen and (min-width: 650px) {
-  #authenticator {
+  #user-handling {
     position: absolute;
     right: 0;
     width: calc(38.2% - 1em); }
@@ -63,7 +69,8 @@ input.authenticator-input {
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); }
 
 #bar-display {
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  background-color: #fffbfd; }
 
 #login-tab-button {
   width: 50%;
@@ -80,8 +87,99 @@ input.authenticator-input {
   cursor: pointer;
   height: 3em;
   border: 0;
-  background-color: #eeaa55;
+  background-color: #f16036;
   z-index: 1;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2); }
   #submit-authentication-form-button:hover {
-    background-color: #e99327; }
+    background-color: #e54010; }
+
+#user-tools {
+  position: relative;
+  background-color: #f16036;
+  height: 3em;
+  text-align: center; }
+  #user-tools > #greeting {
+    position: absolute;
+    top: 0.8em;
+    left: 2%;
+    margin: 0; }
+  #user-tools > #logout-button {
+    padding: 0.3em;
+    border: 0;
+    background-color: #f47e5c;
+    top: 1em;
+    align-self: center;
+    position: absolute;
+    right: 2%; }
+    #user-tools > #logout-button:hover {
+      background-color: #f3734e; }
+
+.bar {
+  box-shadow: 0 2px 2px rgba(255, 255, 255, 0.2);
+  position: relative;
+  height: 55px; }
+  .bar > .bar-name {
+    color: #191919;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    position: absolute;
+    left: 0;
+    width: 90%;
+    font-size: 1.5em;
+    margin: 0.2em;
+    text-align: center; }
+  .bar > .bar-name.logged-in {
+    left: 60px;
+    width: calc(90% - 60px); }
+  .bar > .bar-visitors {
+    color: #191919;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    margin: 0;
+    position: absolute;
+    top: 0.2em;
+    right: 1em; }
+  .bar > span {
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #171a21;
+    z-index: 0; }
+  .bar > button {
+    z-index: 1;
+    background-color: #798a8e;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 60px;
+    border: 0;
+    margin: 0;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2), inset 0 -1px 2px rgba(0, 0, 0, 0.2); }
+    .bar > button:hover {
+      background-color: #617073; }
+    .bar > button:focus {
+      outline: 0; }
+  .bar > .bar-user-is-attending-button {
+    background-color: #34a963; }
+    .bar > .bar-user-is-attending-button:hover {
+      background-color: #28824c; }
+
+#view-message {
+  z-index: 10;
+  align-content: center;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  color: #f16036;
+  border-radius: 10px;
+  background-color: #617073;
+  position: absolute;
+  top: 0;
+  padding: 10px;
+  margin: auto;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2); }
+  #view-message > {
+    text-align: center; }
+
+#nightlife-application {
+  position: relative; }

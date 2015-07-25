@@ -12,17 +12,20 @@ angular.module('nightlife', [])
         };
         $scope.messageFade = 'fade-out';
         var promises = [];
-        function addVisitorsById(id, addend) {
-            var bar;
+        function getBarIndexById(id) {
             for (var i = 0, l = $scope.bars.length; i < l; i++) {
-                bar = $scope.bars[i];
-                if (bar.id === id) {
-                    bar.attending += addend;
-                    return;
+                if ($scope.bars[i].id === id) {
+                    return i;
                 }
             }
-
         }
+        function addVisitorsById(id, addend) {
+            var index = getBarIndexById(id);
+            if (index) {
+                $scope.bars[index].attending += addend;
+            }
+        }
+
         function viewMessage(message, time) {
             // Cancel previous promises
             promises.forEach(function(promise){
@@ -140,7 +143,7 @@ angular.module('nightlife', [])
                     }
                 );
             } else {
-                viewMessage({title: 'Those Passwords Don\'t Match! :0', text: 'Try that again'}, 2000);
+                viewMessage({title: 'Those Passwords Don\'t Match', text: 'Try that again'}, 2000);
             }
         }
         function attend(index) {
@@ -185,5 +188,6 @@ angular.module('nightlife', [])
         };
         $scope.logout = logout;
         $scope.attend = attend;
+        $scope.getBarIndexById = getBarIndexById;
 
     }]);
