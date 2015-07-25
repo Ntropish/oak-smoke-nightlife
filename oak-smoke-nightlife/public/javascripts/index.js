@@ -41,7 +41,6 @@ angular.module('nightlife', [])
             promises.push($timeout(function(){
                 $scope.viewMessageVisible = false;
             }, time));
-
         }
         function getUser() {
             $.ajax('/login',
@@ -57,9 +56,6 @@ angular.module('nightlife', [])
                                 };
                             } else {
                                 user = null;
-                            }
-                            if ($scope.initialHide) {
-                                $scope.initialHide = false;
                             }
                         });
                     }
@@ -101,6 +97,7 @@ angular.module('nightlife', [])
                 var latitude  = position.coords.latitude;
                 var longitude = position.coords.longitude;
                 $scope.latLong = latitude + ',' + longitude;
+                updateBars();
             });
         }
         function updateBars() {
@@ -113,6 +110,9 @@ angular.module('nightlife', [])
                     success: function(res){
                         $scope.$apply(function(){
                             $scope.bars = res;
+                            if ($scope.initialHide) {
+                                $scope.initialHide = false;
+                            }
                         })
                     }
                 }
@@ -165,7 +165,6 @@ angular.module('nightlife', [])
 
         getLocation();
         getUser();
-        viewMessage({title: 'Hello!', text: 'Welcome to Oak Smoke!'}, 3000);
 
         $scope.switchTab = function switchTabToLogin(tabCode) {
             $scope.tab = tabCode;

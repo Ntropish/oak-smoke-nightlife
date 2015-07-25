@@ -20,5 +20,9 @@
     "passport-local": "^1.0.0",
     "request": "^2.60.0",
     "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-util": "^3.0.6"
   }
 }

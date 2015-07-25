@@ -4,25 +4,23 @@ block scripts
    script(src="javascripts/index.js")
 
 block content
-    div(ng-app="nightlife" ng-controller="NightlifeCtrl as nl")
+    div#nightlife-application(ng-app="nightlife" ng-controller="NightlifeCtrl as nl")
         div#authenticator(class="ng-cloak" ng-show="!user || initialHide")
-            button#login-tab-button(class="btn" ng-click="switchTab(0)")
+            button#login-tab-button(ng-class="{'active-tab': tab === 0}" class="btn tab-btn" ng-click="switchTab(0)")
                 | Login
-            button#register-tab-button(class="btn" ng-click="switchTab(1)")
+            button#register-tab-button(ng-class="{'active-tab': tab === 1}" class="btn tab-btn" ng-click="switchTab(1)")
                 | Register
-            form#authentication-form(novalidate)
+            form#authenticator-form(novalidate)
                 input#username-input(type="text" class="authenticator-input" ng-model="username" placeholder="Username")
                 input#password-input(type="password" class="authenticator-input" ng-model="password" placeholder="Password")
                 input#confirm-input(type="password" ng-show="tab === 1" class="authenticator-input" ng-model="confirm" placeholder="Confirm")
-                button#submit-authentication-form-button(class="btn" ng-click="submitAuthenticationForm()")
+                button#submit-authentication-form-button(class="btn authenticator-input" ng-click="submitAuthenticationForm()")
                     | Submit
-        div#user-tools(class="ng-cloak" ng-show="user || initialHide")
+        div#user-tools(class="ng-cloak" ng-show="user && !initialHide")
             h3 Hello, {{user.username}}!
             button(class="btn" ng-click="logout()")
                 | Logout
-        div#display
-            button(class="btn" ng-click="findBars()")
-                | Find local bars
+        div#bar-display
             div(ng-repeat="bar in bars" ng-cloak)
                 h4.bar-name
                     | {{ bar.name }}
@@ -30,6 +28,6 @@ block content
                     | {{ bar.attending }}
                 button(class="btn" ng-click="attend($index)" ng-show="user")
                     | Attend
-        div#viewMessage(ng-class="messageFade" ng-show="viewMessageVisible" ng-cloak)
+        div#view-message(ng-class="messageFade" ng-show="viewMessageVisible" ng-cloak)
             h2 {{ message.title }}
             p {{ message.text }}
