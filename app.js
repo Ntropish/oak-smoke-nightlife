@@ -11,6 +11,7 @@ var session = require('express-session');
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 var SALT_WORK_FACTOR = 10;
+var MONGOLAB_URI = require('./secret/mongolabURI');
 
 var internalRouter = express.Router();
 
@@ -82,7 +83,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 //connect to mongoose and build schemas
-mongoose.connect('mongodb://localhost/nightlife');
+mongoose.connect(MONGOLAB_URI);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection errer:'));
 db.once('open',function () {
