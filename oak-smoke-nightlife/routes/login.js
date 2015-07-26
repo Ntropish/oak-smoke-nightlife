@@ -17,15 +17,16 @@ router.post(
             }
             if (!user) {
                 res.send(report);
+            } else {
+                req.logIn(user, function (err) {
+                    if (err) {
+                        console.error('login error:', err);
+                    } else {
+                        report.success = true;
+                    }
+                    res.send(report);
+                });
             }
-            req.logIn(user, function(err){
-                if (err) {
-                    console.error('login error:',err);
-                } else {
-                    report.success = true;
-                }
-                res.send(report);
-            });
 
         })(req, res, next);
     }

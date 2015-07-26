@@ -32,9 +32,13 @@ passport.use(new LocalStrategy(function(username, password, done){
             }
             user.verifyPassword(password, function(err, isMatch){
                 if (err) {
-                    done(err);
+                    return done(err);
                 }
-                done(null, user);
+                if (!isMatch) {
+                    return done(null, false);
+                }
+                return done(null, user);
+
             });
         });
     });
