@@ -135,7 +135,7 @@ angular.module('nightlife', [])
                             $scope.$apply(function () {
                                 if (res.success) {
                                     $scope.confirm = '';
-                                    login();
+                                    $scope.tab = 0;
                                 }
                             });
                         }
