@@ -6,7 +6,7 @@ var request = require('request');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Bar = mongoose.model('Bar');
-var key = require('./apiKey');
+var key = require('../secret/apiKey');
 
 
 

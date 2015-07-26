@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./www",
+    "start": "node ./www",
     "mongod": "mongod --dbpath ./data"
   },
   "dependencies": {
