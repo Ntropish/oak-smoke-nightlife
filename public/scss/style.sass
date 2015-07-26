@@ -1,0 +1,222 @@
+@import url(http://fonts.googleapis.com/css?family=Montserrat:400,700)
+
+
+$color-whitish: rgb( 255, 251, 253)
+
+$color-one: rgb(241, 96, 54)
+$color-two: rgb( 25,25,25 )
+$color-three: rgb(23,26,33)
+$color-four: rgb(97,112,115)
+$color-five: rgb(229, 179, 129)
+
+$color-green: rgb(40, 130, 76)
+$shadow-color: rgba(0, 0, 0, 0.2)
+$light-shadow-color: rgba(255, 255, 255, 0.2)
+
+$darken-amount: 10%
+$lighten-amount: 10%
+$hover-lighten-amount: 5%
+$button-lighten-amount: 8%
+
+body
+  background-color: $color-whitish
+  padding: 50px
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
+
+a
+  color: #00B7FF
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak
+  display: none !important
+
+input.authenticator-input
+  height: 2em
+  font-size: 1.5em
+  border: 0
+  padding: 0
+
+.authenticator-input
+  display: block
+
+.fade-in
+  opacity: 1
+  transition: 0.2s
+
+.fade-out
+  opacity: 0
+  transition: 0.2s
+
+.authenticator-input
+  width: 100%
+
+.tab-btn
+  cursor: pointer
+  height: 3em
+  border: 0
+  background-color: darken($color-one, $darken-amount)
+  z-index: 1
+  box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.2)
+
+  &:focus
+    outline: 0
+
+  &:hover
+    background-color: darken($color-one, $hover-lighten-amount)
+
+  &.active-tab
+    border-top: 1px solid lighten($color-one, $lighten-amount)
+    position: relative
+    background-color: $color-one
+    box-shadow: 0 1px 1px $shadow-color
+    z-index: 2
+
+@media screen and (min-width: 650px)
+
+  #user-handling
+    position: absolute
+    right: 0
+    width: calc(38.2% - 1em)
+
+  #bar-display
+    width: 61.8%
+
+@media screen and (max-width: 649px)
+
+  body
+    padding: 10px
+
+  #bar-display
+    width: 100%
+
+#nightlife-application
+  position: relative
+
+#authenticator
+  box-shadow: 0 6px 10px $shadow-color
+
+#bar-display
+  box-shadow: 0 6px 10px $shadow-color
+  background-color: $color-whitish
+
+#login-tab-button
+  width: 50%
+  left: 0
+
+#register-tab-button
+  width: 50%
+  right: 0
+
+#authenticator-form
+  width: 100%
+
+#submit-authentication-form-button
+  cursor: pointer
+  height: 3em
+  border: 0
+  background-color: $color-one
+  z-index: 1
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2)
+
+  &:hover
+    background-color: darken($color-one, $darken-amount - 0.1)
+
+#user-tools
+  position: relative
+  background-color: $color-one
+  height: 3em
+  text-align: center
+
+  &>#greeting
+    position: absolute
+    top: 0.8em
+    left: 2%
+    margin: 0
+
+  &>#logout-button
+    padding: 0.3em
+    border: 0
+    background-color: lighten($color-one, $button-lighten-amount)
+    top: 1em
+    align-self: center
+    position: absolute
+    right: 2%
+    &:hover
+      background-color: lighten($color-one, $hover-lighten-amount)
+
+.bar
+  box-shadow: 0 2px 2px $light-shadow-color
+  position: relative
+  height: 55px
+
+  &>.bar-name
+    color: $color-two
+    font-family: 'Montserrat', sans-serif
+    font-weight: 700
+    position: absolute
+    left: 0
+    width: 90%
+    font-size: 1.5em
+    margin: 0.2em
+    text-align: center
+
+  &>.bar-name.logged-in
+    left: 60px
+    width: calc(90% - 60px)
+
+  &>.bar-visitors
+    color: $color-two
+    font-family: 'Montserrat', sans-serif
+    font-weight: 400
+    margin: 0
+    position: absolute
+    top: 0.2em
+    right: 1em
+
+  &>span
+    height: 2px
+    position: absolute
+    bottom: 0
+    width: 100%
+    background-color: $color-three
+    z-index: 0
+
+  &>button
+    z-index: 1
+    background-color: lighten($color-four, $lighten-amount)
+    position: absolute
+    left: 0
+    top: 0
+    height: 100%
+    width: 60px
+    border: 0
+    margin: 0
+    box-shadow: inset 0 1px 2px $light-shadow-color, inset 0 -1px 2px $shadow-color
+    &:hover
+      background-color: $color-four
+
+    &:focus
+      outline: 0
+
+  &>.bar-user-is-attending-button
+    background-color: lighten($color-green, $lighten-amount)
+    &:hover
+      background-color: $color-green
+
+#view-message
+  z-index: 10
+  align-content: center
+  text-shadow: 0 1px 1px $shadow-color
+  color: $color-one
+  border-radius: 10px
+  background-color: $color-four
+  position: absolute
+  top: 0
+  padding: 10px
+  margin: auto
+  box-shadow: 0 10px 10px $shadow-color
+
+  &>
+    text-align: center
+
+#nightlife-application
+  position: relative

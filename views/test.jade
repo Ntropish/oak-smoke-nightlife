@@ -1,0 +1,23 @@
+extends layout
+block scripts
+    script(src="javascripts/test.js")
+block content
+    h1= title
+    p Welcome to #{title}
+    form#register
+        input#usernameRegister(type="text", placeholder="Username")
+        input#passwordRegister(type="text", placeholder="Password")
+        input#confirmRegister(type="text", placeholder="Confirm")
+        button#submitRegister Submit
+    form#login
+        input#usernameLogin(type="text", placeholder="Username")
+        input#passwordLogin(type="text", placeholder="Password")
+        button#submitLogin Submit
+    form#getUsername
+        input#usernameGet(type="text")
+        button#getUsername Get Username
+    form#getBars
+        button#getBars Get Bars
+    div#bar-list-div
+        ul#bar-list
+
