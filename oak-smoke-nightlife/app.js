@@ -9,6 +9,8 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var session = require('express-session');
 var mongoose = require('mongoose');
+var bcrypt = require('bcrypt');
+var SALT_WORK_FACTOR = 10;
 
 var internalRouter = express.Router();
 
@@ -23,15 +25,17 @@ passport.use(new LocalStrategy(function(username, password, done){
     process.nextTick(function () {
         User.findOne({username: username}, function (err, user) {
             if (err) {
-                return done(err);
+                done(err);
             }
             if (!user) {
-                return done(null, false);
+                done(null, false);
             }
-            if (!user.verifyPassword(password)) {
-                return done(null, false);
-            }
-            return done(null, user);
+            user.verifyPassword(password, function(err, isMatch){
+                if (err) {
+                    done(err);
+                }
+                done(null, user);
+            });
         });
     });
 }));
@@ -83,16 +87,42 @@ db.once('open',function () {
 });
 
 var userSchema = mongoose.Schema({
-    username: String,
-    password: String,
+    username: { type: String, required: true, index: { unique: true }},
+    password: { type: String, required: true },
     location: String,
     visiting: String
 });
-userSchema.methods.verifyPassword = function (passwordToCheck) {
-    'use strict';
-    return passwordToCheck === this.password;
-};
 
+userSchema.pre('save', function(next) {
+    var user = this;
+
+    if (!user.isModified('password')) {
+        return next();
+    }
+
+    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+        if (err) {
+            return next(err);
+        }
+
+        bcrypt.hash(user.password, salt, function(err, hash) {
+            if (err) {
+                return next(err);
+            }
+            user.password = hash;
+            next();
+        });
+    });
+});
+userSchema.methods.verifyPassword = function (passwordToCheck, cb) {
+    'use strict';
+    bcrypt.compare(passwordToCheck, this.password, function(err, isMatch) {
+        if (err) {
+            return cb(err);
+        }
+        cb(null, isMatch);
+    });
+};
 var barSchema = mongoose.Schema({
     name: String,
     numberVisiting: Number,
@@ -154,7 +184,7 @@ function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect('/login');
+    //res.redirect('/login');
 }
 
 
