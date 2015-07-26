@@ -26,10 +26,10 @@ passport.use(new LocalStrategy(function(username, password, done){
     process.nextTick(function () {
         User.findOne({username: username}, function (err, user) {
             if (err) {
-                done(err);
+                return done(err);
             }
             if (!user) {
-                done(null, false);
+                return done(null, false);
             }
             user.verifyPassword(password, function(err, isMatch){
                 if (err) {
